@@ -6,21 +6,10 @@ import pickle
 # Hypertune parameters, n_mfcc=13, n_fft=n_fft, hop_length=hop_length
 
 def extract_features_from_dir(audio_dir):
-    """
-    Iterates through .wav files in the given directory and extracts MFCC features.
-    
-    Args:
-        audio_dir (str): Path to the directory containing .wav files.
-        
-    Returns:
-        tuple: (list of MFCC sequences, list of labels)
-    """
     mfcc_sequences = []
     labels = []
-    extension = ('.wav')
         
-    # Get all files in directory and sort for consistency
-    files = sorted([f for f in os.listdir(audio_dir) if f.endswith(extension)])
+    files = sorted([f for f in os.listdir(audio_dir)])
     
     print(f"Processing {len(files)} files in {audio_dir}")
     
@@ -28,16 +17,13 @@ def extract_features_from_dir(audio_dir):
         file_path = os.path.join(audio_dir, filename)
         
         # Load the audio signal
-        # Use sr=None to preserve native sampling rate
-        y, sr = librosa.load(file_path, sr=16000)
+        y, sr = librosa.load(file_path, sr=None)
             
         # Framing parameters
-        # 25 ms duration for window length, 10 ms for hop length
+        # 25 ms duration for window length, 10 ms for hop length, 13 MFCCs per frame
         n_fft = int(0.025 * sr) 
         hop_length = int(0.010 * sr)
             
-        # 13 MFCCs per frame
-        # Use n_mfcc=13 per frame. n_fft handles the 25ms window.
         mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, n_fft=n_fft, hop_length=hop_length)
         mfccs_transpose = mfccs.T
             
@@ -50,7 +36,6 @@ def extract_features_from_dir(audio_dir):
     return mfcc_sequences, labels
 
 def save_dataset(data, labels, filepath):
-    """Saves the extracted features and labels to a pickle file."""
     with open(filepath, 'wb') as f:
         pickle.dump({'features': data, 'labels': labels}, f)
     print(f"Dataset saved to {filepath}")
