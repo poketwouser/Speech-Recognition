@@ -1,6 +1,6 @@
 import numpy as np
 
-def log_sum_exp(a, axis=None, keepdims=False):
+def log_sum_exp(a, axis=None):
     a_max = np.max(a, axis=axis, keepdims=True)
     
     # All entries = -inf, a_max = -inf, a - a_max = nan
@@ -20,14 +20,14 @@ def log_multivariate_normal_density(X, means, covars):
 
     log_prob = np.empty((n_samples, n_components))
     for c in range(n_components):
-        # Diagonal covariance.
+        # Diagonal covariance
         log_det = np.sum(np.log(covars[c]))
         
-        precisions = 1.0 / covars[c]
+        inv_cov = 1.0 / covars[c]
         
-        # log pdf = -0.5 * (D * log(2*pi) + log_det + sum((X - mean)^2 * precision))
+        # log pdf = -0.5 * (D * log(2*pi) + log_det + sum((X - mean)^2 * inv_cov))
         diff = X - means[c]
-        sq_diff = (diff ** 2) * precisions
+        sq_diff = (diff ** 2) * inv_cov
         exponent = np.sum(sq_diff, axis=1)
         
         log_prob[:, c] = -0.5 * (n_features * np.log(2 * np.pi) + log_det + exponent)
