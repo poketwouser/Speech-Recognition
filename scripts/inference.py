@@ -39,8 +39,8 @@ def print_metrics(name, algo_name, accuracy, cm, classes):
     print(f"\n{algo_name} {name} Results")
     print(f"Accuracy: {accuracy * 100:.2f}%")
     print("\nConfusion Matrix:")
-    print(" True\\Pred  | " + " ".join([f"{c:4d}" for c in classes]))
-    print("-" * (13 + 5 * len(classes)))
+    print(" True\\Pred | " + " ".join([f"{c:4d}" for c in classes]))
+    print("-" * (12 + 5 * len(classes)))
     
     per_digit_acc = {}
     for i, true_digit in enumerate(classes):

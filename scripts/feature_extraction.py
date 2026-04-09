@@ -17,7 +17,7 @@ def extract_features_from_dir(audio_dir):
         file_path = os.path.join(audio_dir, filename)
         
         # Load the audio signal
-        y, sr = librosa.load(file_path, sr=None)
+        y, sr = librosa.load(file_path, sr=16000)
             
         # Framing parameters
         # 25 ms duration for window length, 10 ms for hop length, 13 MFCCs per frame
