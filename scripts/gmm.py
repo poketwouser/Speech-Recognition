@@ -1,6 +1,7 @@
 import numpy as np
 from utils import log_sum_exp, log_multivariate_normal_density
 
+# Try k-means++ initialization
 class GMM:
     def __init__(self, n_components=4, n_iter=100, tol=1e-3, min_covar=1e-3):
         self.n_components = n_components
