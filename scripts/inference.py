@@ -39,7 +39,7 @@ def print_metrics(name, algo_name, accuracy, cm, classes):
     print(f"\n{algo_name} {name} Results")
     print(f"Accuracy: {accuracy * 100:.2f}%")
     print("\nConfusion Matrix:")
-    print(" True\Pred  | " + " ".join([f"{c:4d}" for c in classes]))
+    print(" True\\Pred  | " + " ".join([f"{c:4d}" for c in classes]))
     print("-" * (13 + 5 * len(classes)))
     
     per_digit_acc = {}
@@ -78,14 +78,14 @@ def main():
     with open('./data/hmms.pkl', 'rb') as f:
         hmms = pickle.load(f)
 
-    print("Evaluating GMMs...")
+    print("Evaluating GMMs")
     gmm_val_acc, gmm_val_cm = evaluate(gmms, X_val, y_val)
     print_metrics("Validation", "GMM", gmm_val_acc, gmm_val_cm, classes)
     
     gmm_test_acc, gmm_test_cm = evaluate(gmms, X_test, y_test)
     print_metrics("Test", "GMM", gmm_test_acc, gmm_test_cm, classes)
     
-    print("Evaluating HMMs...")
+    print("Evaluating HMMs")
     hmm_val_acc, hmm_val_cm = evaluate(hmms, X_val, y_val)
     print_metrics("Validation", "HMM", hmm_val_acc, hmm_val_cm, classes)
         

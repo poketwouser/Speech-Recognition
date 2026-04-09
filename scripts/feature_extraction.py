@@ -3,7 +3,7 @@ import librosa
 import numpy as np
 import pickle
 
-# Hypertune parameters, n_mfcc=13, n_fft=n_fft, hop_length=hop_length
+# Hypertune parameters, n_mfcc=13, n_fft=n_fft, hop_length=hop_length, sr(None preserves sampling rate)
 
 def extract_features_from_dir(audio_dir):
     mfcc_sequences = []
