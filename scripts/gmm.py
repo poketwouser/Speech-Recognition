@@ -38,7 +38,7 @@ class GMM:
         log_prob_norm = log_sum_exp(log_joint, axis=1)
         
         # log P(Z|X) = log P(X, Z) - log P(X)
-        log_resp = log_joint - log_prob_norm[:, np.newaxis]
+        log_resp = log_joint - log_prob_norm
         
         # return log P(X) mean, and log P(Z|X)
         return np.mean(log_prob_norm), log_resp

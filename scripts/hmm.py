@@ -85,7 +85,7 @@ class HMM:
         
         for t in range(T - 2, -1, -1):
             work = self.log_A + log_prob[t + 1] + log_beta[t + 1]
-            log_beta[t] = log_sum_exp(work, axis=1)
+            log_beta[t] = log_sum_exp(work, axis=1, keepdims=False)
             
         return log_beta
 
@@ -115,8 +115,8 @@ class HMM:
             
             log_epsilon_xi = log_alpha[:-1, :, np.newaxis] + self.log_A + log_prob[1:, np.newaxis, :] + log_beta[1:, np.newaxis, :] - log_L
             
-            hmm_params['log_gamma_sum'] = np.logaddexp(hmm_params['log_gamma_sum'], log_sum_exp(log_gamma[:-1], axis=0))
-            hmm_params['log_epsilon_xi_sum'] = np.logaddexp(hmm_params['log_epsilon_xi_sum'], log_sum_exp(log_epsilon_xi, axis=0))
+            hmm_params['log_gamma_sum'] = np.logaddexp(hmm_params['log_gamma_sum'], log_sum_exp(log_gamma[:-1], axis=0, keepdims=False))
+            hmm_params['log_epsilon_xi_sum'] = np.logaddexp(hmm_params['log_epsilon_xi_sum'], log_sum_exp(log_epsilon_xi, axis=0, keepdims=False))
             
             hmm_params['sum_gamma_X'] += np.dot(gamma.T, X)
             hmm_params['sum_gamma_X2'] += np.dot(gamma.T, X ** 2)
@@ -158,7 +158,7 @@ class HMM:
             self._m_step(hmm_params)
             
             if abs(log_L - prev_log_L) < self.tol:
-                print(f"HMM converged at iteration {i} with log-likelihood {log_L:.4f}")
+                print(f"HMM converged at iteration {i}")
                 break
             prev_log_L = log_L
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-def log_sum_exp(a, axis=None):
+def log_sum_exp(a, axis=None, keepdims=True):
     a_max = np.max(a, axis=axis, keepdims=True)
     
     # All entries = -inf, a_max = -inf, a - a_max = nan
@@ -12,6 +12,8 @@ def log_sum_exp(a, axis=None):
     diff = a - a_max
     sum_exp = np.sum(np.exp(np.where(valid, diff, 0)), axis=axis, keepdims=True)
     out = np.where(valid, np.log(sum_exp) + a_max, -np.inf)
+    if not keepdims:
+        out = np.squeeze(out, axis=axis)
     return out
 
 def log_multivariate_normal_density(X, means, covars):
