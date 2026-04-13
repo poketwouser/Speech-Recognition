@@ -65,7 +65,7 @@ def main():
         print(f"Training HMM for digit {c}")
         # One HMM Model for every class
         X_c = [X for X, y in zip(X_train, y_train) if y == c]
-        hmm = HMM(n_states=5, n_iter=50)
+        hmm = HMM(n_states=5, n_iter=100)
         hmm.fit(X_c)
         hmms[c] = hmm
         
